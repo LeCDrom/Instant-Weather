@@ -2,6 +2,7 @@
 ## Exercice Javascript
 
 Lien du projet : https://github.com/LeCDrom/Instant-Weather/
+Accessible sur GitHub Pages : https://lecdrom.github.io/Instant-Weather/
 
 Cet exercice a pour objectifs de :
 
