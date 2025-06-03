@@ -19,7 +19,6 @@
     <header>
         <div class="logo">
             <span class="material-symbols-rounded">partly_cloudy_day</span>
-            
         </div>
         <h1>INSTANT WEATHER</h1>
         <p class="tagline"><span class="material-symbols-rounded">public</span> Votre météo en un clic</p>
@@ -27,16 +26,22 @@
             <span class="material-symbols-rounded">dark_mode</span>
         </button>
     </header>
+
     <main>
         <section id="cityForm">
             <h2><span class="material-symbols-rounded">location_on</span> Rechercher une ville</h2>
             <form id="cityForm_form" action="dummy">
+
                 <div class="input-group">
+                    <!-- Label invisible pour l’input texte -->
+                    <label for="code-postal" class="sr-only">Code postal</label>
                     <span class="material-symbols-rounded">mail</span>
                     <input type="text" id="code-postal" placeholder="Entrez un code postal..." />
                 </div>
 
                 <div class="input-group">
+                    <!-- Label invisible pour le select -->
+                    <label for="communeSelect" class="sr-only">Commune</label>
                     <span class="material-symbols-rounded">location_city</span>
                     <select id="communeSelect">
                         <option value="">Sélectionnez une commune</option>
@@ -44,6 +49,8 @@
                 </div>
 
                 <div class="days-section">
+                    <!-- Label invisible pour le slider -->
+                    <label for="nbDays" class="sr-only">Nombre de jours</label>
                     <label><span class="material-symbols-rounded">date_range</span> Nombre de jours :</label>
                     <div class="slider-container">
                         <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange">
@@ -54,22 +61,25 @@
                 <fieldset>
                     <legend><span class="material-symbols-rounded">info</span> Informations supplémentaires</legend>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" id="lat"> Latitude</label>
-                        <label><input type="checkbox" id="lon"> Longitude</label>
-                        <label><input type="checkbox" id="rain"> Cumul de pluie</label>
-                        <label><input type="checkbox" id="wind"> Vent moyen</label>
-                        <label><input type="checkbox" id="dir"> Direction du vent</label>
+                        <label for="lat"><input type="checkbox" id="lat"> Latitude</label>
+                        <label for="lon"><input type="checkbox" id="lon"> Longitude</label>
+                        <label for="rain"><input type="checkbox" id="rain"> Cumul de pluie</label>
+                        <label for="wind"><input type="checkbox" id="wind"> Vent moyen</label>
+                        <label for="dir"><input type="checkbox" id="dir"> Direction du vent</label>
                     </div>
                 </fieldset>
+
             </form>
             <button id="validationButton"><span class="material-symbols-rounded">search</span> Valider</button>
         </section>
 
         <section id="weatherInformation" class="weather-cards"></section>
     </main>
+
     <footer>
         <p>© 2025 Instant Weather - Côme Dairin</p>
     </footer>
 </body>
+
 
 </html>

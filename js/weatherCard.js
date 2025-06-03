@@ -1,53 +1,48 @@
 // weatherCard.js
 console.log("weatherCard.js chargé");
 
-// Ce fichier peut être utilisé pour isoler la logique de création des cartes météo
-// Actuellement, la fonction createWeatherCard est définie dans app.js
+// Cartes météo
+function createWeatherCard(city, forecast, opts) {
+  const article = document.createElement("article");
+  article.className = "weather-card";
 
-// Il pourrait contenir des fonctionnalités supplémentaires liées aux cartes météo
-// Par exemple:
+  const date = new Date(forecast.datetime).toLocaleDateString("fr-FR", {
+    weekday: "long", day: "numeric", month: "long"
+  });
 
-// Map des codes météo aux descriptions
-const weatherDescriptions = {
-  0: "Soleil",
-  1: "Peu nuageux",
-  2: "Ciel voilé",
-  3: "Nuageux",
-  4: "Très nuageux",
-  5: "Brouillard",
-  6: "Brouillard givrant",
-  7: "Pluie faible",
-  8: "Pluie modérée",
-  9: "Pluie forte",
-  10: "Pluie faible verglaçante",
-  11: "Pluie modérée verglaçante",
-  12: "Pluie forte verglaçante",
-  13: "Bruine",
-  14: "Neige faible",
-  15: "Neige modérée",
-  16: "Neige forte",
-  20: "Orage",
-  21: "Grêle",
-  22: "Neige faible",
-  30: "Temps ensoleillé",
-  31: "Éclaircies (jour)",
-  32: "Nuageux",
-  33: "Brume",
-  34: "Variable"
-};
+  const weatherIcon = getWeatherIcon(forecast.weather);
 
-// Cette fonction pourrait être utilisée pour obtenir la description du temps
-function getWeatherDescription(weatherCode) {
-  return weatherDescriptions[weatherCode] || "Inconnu";
+  let html = `
+    <div class="weather-icon">
+      <span class="material-symbols-rounded">${weatherIcon}</span>
+    </div>
+    <h3>${city.name} — ${date}</h3>
+    <div class="temp-info">
+      <span class="temp-container"><span class="material-symbols-rounded" id="temp-down">thermostat_arrow_down</span> ${forecast.tmin}°C</span>
+      <span class="temp-container"><span class="material-symbols-rounded" id="temp-up">thermostat_arrow_up</span> ${forecast.tmax}°C</span>
+    </div>
+  `;
+
+  if (opts.showLat && city.latitude) {
+    html += `<p class="info-row"><span class="material-symbols-rounded">map</span> Latitude : ${city.latitude}</p>`;
+  }
+
+  if (opts.showLon && city.longitude) {
+    html += `<p class="info-row"><span class="material-symbols-rounded">map</span> Longitude : ${city.longitude}</p>`;
+  }
+
+  if (opts.showRain) {
+    html += `<p class="info-row"><span class="material-symbols-rounded">water_drop</span> Pluie : ${forecast.rr10} mm</p>`;
+  }
+
+  if (opts.showWind) {
+    html += `<p class="info-row"><span class="material-symbols-rounded">air</span> Vent : ${forecast.wind10m} km/h</p>`;
+  }
+
+  if (opts.showDir) {
+    html += `<p class="info-row"><span class="material-symbols-rounded">navigation</span> Direction : ${forecast.dirwind10m}°</p>`;
+  }
+
+  article.innerHTML = html;
+  return article;
 }
-
-// Cette fonction pourrait être utilisée pour convertir la direction du vent en points cardinaux
-function getWindDirection(degrees) {
-  const directions = ["N", "NE", "E", "SE", "S", "SO", "O", "NO"];
-  const index = Math.round(degrees / 45) % 8;
-  return directions[index];
-}
-
-// Exportation des fonctions pour utilisation dans app.js
-// (Dans une architecture plus complexe avec des modules)
-// export { getWeatherDescription, getWindDirection };

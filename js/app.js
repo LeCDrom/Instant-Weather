@@ -1,3 +1,6 @@
+// app.js
+console.log("app.js chargé");
+
 const apiKey = "222d0d26fe75c52249049d41500dbda856ccad03b7d06bf0dbf0fc551ece254e";
 const meteoBaseUrl = "https://api.meteo-concept.com/api";
 const geoBaseUrl = "https://geo.api.gouv.fr/communes";
@@ -171,7 +174,7 @@ function debounce(fn, ms) {
   };
 }
 
-// --- Icone météo selon code météo ---
+//  Icone météo selon code météo
 function getWeatherIcon(weatherCode) {
   const weatherIcons = {
     // Conditions ensoleillées et peu nuageuses
@@ -281,51 +284,6 @@ function getWeatherIcon(weatherCode) {
     33: "cloud",               // Nuit très nuageuse
     34: "cloud",               // Nuit couverte
   };
+
   return weatherIcons[weatherCode] || "help_outline";
-}
-
-// --- Carte météo ---
-function createWeatherCard(city, forecast, opts) {
-  const article = document.createElement("article");
-  article.className = "weather-card";
-
-  const date = new Date(forecast.datetime).toLocaleDateString("fr-FR", {
-    weekday: "long", day: "numeric", month: "long"
-  });
-
-  const weatherIcon = getWeatherIcon(forecast.weather);
-
-  let html = `
-    <div class="weather-icon">
-      <span class="material-symbols-rounded">${weatherIcon}</span>
-    </div>
-    <h3>${city.name} — ${date}</h3>
-    <div class="temp-info">
-      <span><span class="material-symbols-rounded">arrow_downward</span> ${forecast.tmin}°C</span>
-      <span><span class="material-symbols-rounded">arrow_upward</span> ${forecast.tmax}°C</span>
-    </div>
-  `;
-
-  if (opts.showLat && city.latitude) {
-    html += `<p class="info-row"><span class="material-symbols-rounded">explore</span> Latitude: ${city.latitude}</p>`;
-  }
-
-  if (opts.showLon && city.longitude) {
-    html += `<p class="info-row"><span class="material-symbols-rounded">explore</span> Longitude: ${city.longitude}</p>`;
-  }
-
-  if (opts.showRain) {
-    html += `<p class="info-row"><span class="material-symbols-rounded">water_drop</span> Pluie: ${forecast.rr10} mm</p>`;
-  }
-
-  if (opts.showWind) {
-    html += `<p class="info-row"><span class="material-symbols-rounded">air</span> Vent: ${forecast.wind10m} km/h</p>`;
-  }
-
-  if (opts.showDir) {
-    html += `<p class="info-row"><span class="material-symbols-rounded">navigation</span> Direction: ${forecast.dirwind10m}°</p>`;
-  }
-
-  article.innerHTML = html;
-  return article;
 }
