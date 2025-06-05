@@ -18,6 +18,7 @@ Outil météo web efficace utilisant les API
 Sélection de communes à partir du code postal et choix des options supplémentaires :
 - Prévisions de 1 à 7 jours
 - Latitude / Longitude
+- Durée d'ensoleillement
 - Cumul de pluie
 - Vent moyen
 - Direction du vent
