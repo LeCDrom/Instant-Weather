@@ -57,7 +57,7 @@ nbDaysInput.addEventListener("input", () => {
   updateSliderBackground();
 });
 
-// --- Recherche des communes via Geo API Gouv ---
+// Recherche des communes via Geo API Gouv
 postalInput.addEventListener("input", debounce(async () => {
   const code = postalInput.value.trim();
 
@@ -109,19 +109,20 @@ postalInput.addEventListener("input", debounce(async () => {
   }
 }, 300));
 
-// --- Empêcher la validation avec Entrée dans le champ code postal ---
+// Empêcher la validation avec Entrée dans champ code postal
 postalInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
   }
 });
 
-// --- Validation et affichage météo ---
-validationButton.addEventListener("click", async () => {
+// Validation et affichage météo
+validationButton.addEventListener("click", async (e) => {
+  e.preventDefault();
+
   const insee = communeSelect.value;
 
   if (!insee) {
-    alert("Veuillez sélectionner une commune.");
     return;
   }
 
@@ -130,6 +131,7 @@ validationButton.addEventListener("click", async () => {
   const nbDays = parseInt(nbDaysInput.value, 10);
   const showLat = document.getElementById("lat").checked;
   const showLon = document.getElementById("lon").checked;
+  const showSun = document.getElementById("sun").checked;
   const showRain = document.getElementById("rain").checked;
   const showWind = document.getElementById("wind").checked;
   const showDir = document.getElementById("dir").checked;
@@ -141,6 +143,7 @@ validationButton.addEventListener("click", async () => {
     longitude: selectedOption.getAttribute("data-longitude")
   };
 
+  // Requête API vers open meteo concept
   try {
     const resF = await fetch(`${meteoBaseUrl}/forecast/daily?token=${apiKey}&insee=${insee}&day=${nbDays}`);
     console.log(resF)
@@ -156,7 +159,7 @@ validationButton.addEventListener("click", async () => {
 
     weatherInfoSection.innerHTML = "";
     forecasts.forEach(f => {
-      const card = createWeatherCard(city, f, { showLat, showLon, showRain, showWind, showDir });
+      const card = createWeatherCard(city, f, { showLat, showLon, showSun, showRain, showWind, showDir });
       weatherInfoSection.appendChild(card);
     });
   } catch (err) {
@@ -165,7 +168,7 @@ validationButton.addEventListener("click", async () => {
   }
 });
 
-// --- Debounce ---
+// Debounce
 function debounce(fn, ms) {
   let timer;
   return (...args) => {
@@ -177,7 +180,7 @@ function debounce(fn, ms) {
 //  Icone météo selon code météo
 function getWeatherIcon(weatherCode) {
   const weatherIcons = {
-    // Conditions ensoleillées et peu nuageuses
+    // Conditions ensoleillées
     0: "wb_sunny",             // Soleil
     1: "partly_cloudy_day",    // Peu nuageux
     2: "partly_cloudy_day",    // Ciel voilé
@@ -277,12 +280,21 @@ function getWeatherIcon(weatherCode) {
     141: "thunderstorm",       // Pluie et neige mêlées à caractère orageux
     142: "thunderstorm",       // Neige à caractère orageux
 
-    // Conditions nocturnes
-    30: "clear_night",         // Nuit claire
-    31: "partly_cloudy_night", // Nuit partiellement nuageuse
-    32: "cloud",               // Nuit nuageuse
-    33: "cloud",               // Nuit très nuageuse
-    34: "cloud",               // Nuit couverte
+    // Pluies intermittentes
+    210: "rainy",              // Pluie faible intermittente
+    211: "rainy",              // Pluie modérée intermittente
+    212: "rainy_heavy",        // Pluie forte intermittente
+
+    // Pluies intermittentes
+    220: "weather_snowy",      // Neige faible intermittente
+    221: "snowing",            // Neige modérée intermittente
+    222: "snowing_heavy",      // Neige forte intermittente
+
+    // Autres
+    230: "rainy_snow",         // Pluie et neige mêlées
+    231: "rainy_snow",         // Pluie et neige mêlées
+    232: "rainy_snow",         // Pluie et neige mêlées
+    235: "weather_hail"        // Averses de grêle
   };
 
   return weatherIcons[weatherCode] || "help_outline";

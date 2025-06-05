@@ -36,7 +36,7 @@
                     <!-- Label invisible pour l’input texte -->
                     <label for="code-postal" class="sr-only">Code postal</label>
                     <span class="material-symbols-rounded">mail</span>
-                    <input type="text" id="code-postal" placeholder="Entrez un code postal..." />
+                    <input type="text" id="code-postal" placeholder="Entrez un code postal..." name="code-postal" required/>
                 </div>
 
                 <div class="input-group">
@@ -53,27 +53,29 @@
                     <label for="nbDays" class="sr-only">Nombre de jours</label>
                     <label><span class="material-symbols-rounded">date_range</span> Nombre de jours :</label>
                     <div class="slider-container">
-                        <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange">
+                        <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange" name="days"/>
                         <span id="daysCount">1</span> jour(s)
                     </div>
                 </div>
 
+                <!-- Infos supplémentaires -->
                 <fieldset>
                     <legend><span class="material-symbols-rounded">info</span> Informations supplémentaires</legend>
                     <div class="checkbox-group">
-                        <label for="lat"><input type="checkbox" id="lat"> Latitude</label>
-                        <label for="lon"><input type="checkbox" id="lon"> Longitude</label>
-                        <label for="rain"><input type="checkbox" id="rain"> Cumul de pluie</label>
-                        <label for="wind"><input type="checkbox" id="wind"> Vent moyen</label>
-                        <label for="dir"><input type="checkbox" id="dir"> Direction du vent</label>
+                        <label for="lat"><input type="checkbox" id="lat" name="latitude"> Latitude</label>
+                        <label for="lon"><input type="checkbox" id="lon" name="longitude"> Longitude</label>
+                        <label for="sun"><input type="checkbox" id="sun" name="soleil"> Ensoleillement</label>
+                        <label for="rain"><input type="checkbox" id="rain" name="pluie"> Cumul de pluie</label>
+                        <label for="wind"><input type="checkbox" id="wind" name="vent"> Vent moyen</label>
+                        <label for="dir"><input type="checkbox" id="dir" name="vent-dir"> Direction du vent</label>
                     </div>
                 </fieldset>
 
             </form>
-            <button id="validationButton"><span class="material-symbols-rounded">search</span> Valider</button>
+            <button id="validationButton" type="submit"><span class="material-symbols-rounded">search</span> Valider</button>
         </section>
 
-        <section id="weatherInformation" class="weather-cards"></section>
+        <section id="weatherInformation" class="weather-cards"> <!-- Vide avant les requêtes API --> </section>
     </main>
 
     <footer>
