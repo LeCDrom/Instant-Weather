@@ -13,6 +13,9 @@ const weatherInfoSection = document.getElementById("weatherInformation");
 const nbDaysInput = document.getElementById("nbDays");
 const daysCount = document.getElementById("daysCount");
 const toggleDarkMode = document.getElementById("toggleDarkMode");
+const mapSection = document.getElementById("mapSection");
+
+let map, marker; // Déclaration des variables pour la carte
 
 // Initialisation du mode sombre persistant
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,6 +30,29 @@ document.addEventListener("DOMContentLoaded", () => {
   updateSliderBackground();
   daysCount.textContent = nbDaysInput.value;
 });
+
+function initMap(latitude, longitude) {
+  mapSection.style.display = "block"; // Afficher la section carte
+
+  // Si la carte n'est pas déjà initialisée, on l'initialise
+  if (!map) {
+    map = L.map("map").setView([latitude, longitude], 13); // Initialisation de la carte avec la vue sur la commune
+  } else {
+    map.setView([latitude, longitude], 13); // Mise à jour de la vue de la carte
+  }
+
+  // Ajout de la couche de tuiles OpenStreetMap
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Mise à jour du marqueur si nécessaire
+  if (marker) {
+    marker.setLatLng([latitude, longitude]);
+  } else {
+    marker = L.marker([latitude, longitude]).addTo(map); // Ajouter un marqueur
+  }
+}
 
 // Gestionnaire du dark mode
 toggleDarkMode.addEventListener("click", () => {
@@ -146,7 +172,6 @@ validationButton.addEventListener("click", async (e) => {
   // Requête API vers open meteo concept
   try {
     const resF = await fetch(`${meteoBaseUrl}/forecast/daily?token=${apiKey}&insee=${insee}&day=${nbDays}`);
-    console.log(resF)
     if (!resF.ok) throw new Error(`Erreur API: ${resF.status}`);
 
     const jsonF = await resF.json();
@@ -157,11 +182,17 @@ validationButton.addEventListener("click", async (e) => {
       city.longitude = jsonF.city.longitude;
     }
 
-    weatherInfoSection.innerHTML = "";
+    weatherInfoSection.innerHTML = ""; // Réinitialisation des données météo
     forecasts.forEach(f => {
       const card = createWeatherCard(city, f, { showLat, showLon, showSun, showRain, showWind, showDir });
       weatherInfoSection.appendChild(card);
     });
+
+    // Affichage de la section carte
+    mapSection.style.display = "block";
+
+    // Mise à jour ou initialisation de la carte
+    initMap(city.latitude, city.longitude); // Utilisation des coordonnées de la commune choisie
   } catch (err) {
     console.error("Erreur Météo API :", err);
     weatherInfoSection.innerHTML = "<div class='error-message'><span class='material-symbols-rounded'>error</span> Impossible de récupérer les prévisions.</div>";

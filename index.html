@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@1">
     <link rel="shortcut icon" href="./favicon/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Leaflet.js (carte) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
     <script defer src="./js/app.js"></script>
     <script defer src="./js/weatherCard.js"></script>
     <title>Instant Weather</title>
@@ -36,7 +42,8 @@
                     <!-- Label invisible pour l’input texte -->
                     <label for="code-postal" class="sr-only">Code postal</label>
                     <span class="material-symbols-rounded">mail</span>
-                    <input type="text" id="code-postal" placeholder="Entrez un code postal..." name="code-postal" required>
+                    <input type="text" id="code-postal" placeholder="Entrez un code postal..." name="code-postal"
+                        required>
                 </div>
 
                 <div class="input-group">
@@ -51,11 +58,11 @@
                 <div class="days-section">
                     <fieldset>
                         <legend><span class="material-symbols-rounded">date_range</span> Nombre de jours</legend>
-                    <!-- Label invisible pour le slider -->
-                    <div class="slider-container">
-                        <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange" name="days">
-                        <span id="daysCount">1</span> jour(s)
-                    </div>
+                        <!-- Label invisible pour le slider -->
+                        <div class="slider-container">
+                            <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange" name="days">
+                            <span id="daysCount">1</span> jour(s)
+                        </div>
                     </fieldset>
                 </div>
 
@@ -73,7 +80,13 @@
                 </fieldset>
 
             </form>
-            <button id="validationButton" type="submit"><span class="material-symbols-rounded">search</span> Valider</button>
+            <button id="validationButton" type="submit"><span class="material-symbols-rounded">search</span>
+                Valider</button>
+        </section>
+
+        <section id="mapSection">
+            <h2><span class="material-symbols-rounded">map</span> Localisation de la commune</h2>
+            <div id="map"></div>
         </section>
 
         <div id="weatherInformation" class="weather-cards"> <!-- Vide avant les requêtes API --> </div>

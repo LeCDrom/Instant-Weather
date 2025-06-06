@@ -20,7 +20,7 @@ function createWeatherCard(city, forecast, opts) {
     <div class="weather-icon">
       <span class="material-symbols-rounded">${weatherIcon}</span>
     </div>
-    <h3>${city.name} — ${date}</h3>
+    <h3>${city.name}<br>${date}</h3>
     <div class="temp-info">
       <span class="temp-container"><span class="material-symbols-rounded" id="temp-down">thermostat_arrow_down</span> ${forecast.tmin}°C</span>
       <span class="temp-container"><span class="material-symbols-rounded" id="temp-up">thermostat_arrow_up</span> ${forecast.tmax}°C</span>
