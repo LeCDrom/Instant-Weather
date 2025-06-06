@@ -56,14 +56,13 @@
                 </div>
 
                 <div class="days-section">
-                    <fieldset>
-                        <legend><span class="material-symbols-rounded">date_range</span> Nombre de jours</legend>
-                        <!-- Label invisible pour le slider -->
-                        <div class="slider-container">
-                            <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange" name="days">
-                            <span id="daysCount">1</span> jour(s)
-                        </div>
-                    </fieldset>
+                    <!-- Label invisible pour le slider -->
+                    <label for="nbDays" class="sr-only">Nombre de jours</label>
+                    <label><span class="material-symbols-rounded">date_range</span> Nombre de jours :</label>
+                    <div class="slider-container">
+                        <input type="range" id="nbDays" min="1" max="7" value="1" class="inputRange" name="days"/>
+                        <span id="daysCount">1</span> jour(s)
+                    </div>
                 </div>
 
                 <!-- Infos supplémentaires -->
